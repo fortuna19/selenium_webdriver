@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Tests {
@@ -73,6 +74,32 @@ public class Tests {
         WebElement userName = driver.findElement(By.xpath("//span[text()='Oleksandr Rozhok']"));
 
         Assert.assertEquals(userName.getText(), "Oleksandr Rozhok");
+    }
+
+    @Test
+    public void addFirstItemToCart() {
+        WebElement hideButton = driver.findElement(By.xpath("//span[text()='Hide']"));
+        hideButton.click();
+
+        driver.switchTo().frame(0);
+
+        List<WebElement> productItems = driver.findElements(By.xpath("//div[@itemprop='itemListElement']"));
+        WebElement itemName = productItems.get(0).findElement(By.xpath("//h3[@itemprop='name']/a"));
+        String itemNameMainPage = itemName.getText();
+        productItems.get(0).click();
+
+        WebElement addToCartButton = driver.findElement(By.xpath("//button[@data-button-action='add-to-cart']"));
+        addToCartButton.click();
+
+        WebElement proceedToCheckoutButton = driver.findElement(By.xpath("//a[text()='Proceed to checkout']"));
+        proceedToCheckoutButton.click();
+
+        WebElement shoppingCartTitle = driver.findElement(By.xpath("//h1[text()='Shopping Cart']"));
+        Assert.assertEquals(shoppingCartTitle.getText().toUpperCase(), "SHOPPING CART");
+
+        List<WebElement> itemsInCart = driver.findElements(By.xpath("//li[@class='cart-item']"));
+        WebElement itemInCartName = itemsInCart.get(0).findElement(By.xpath("//a[@class='label']"));
+        Assert.assertEquals(itemInCartName.getText().toLowerCase(), itemNameMainPage.toLowerCase());
     }
 }
 

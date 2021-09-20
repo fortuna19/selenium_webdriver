@@ -65,8 +65,8 @@ public class Tests {
         WebElement passwordInput = driver.findElement(By.xpath("//input[@class='form-control js-child-focus js-visible-password']"));
         WebElement submitButton = driver.findElement(By.xpath("//button[@id='submit-login']"));
 
-        emailInput.sendKeys("fortuna1919@gmail.com", Keys.TAB);
-        passwordInput.sendKeys("strong19");
+        emailInput.sendKeys("SOME_EMAIL_HERE", Keys.TAB);
+        passwordInput.sendKeys("SOME_PASSWORD_HERE");
         submitButton.click();
 
         Thread.sleep(5000);
